@@ -24,3 +24,5 @@ function toBytecode(s) {
   }
   return { op, arg: color };
 }
+
+module.exports = { compile };

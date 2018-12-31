@@ -41,3 +41,5 @@ function delay(ms) {
     setTimeout(resolve, ms);
   });
 }
+
+module.exports = Player;

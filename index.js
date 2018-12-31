@@ -1,16 +1,19 @@
 const express = require("express");
 const app = express();
+const Engine = require("./src/engine");
+
+const engine = new Engine();
 
 app.set("view engine", "ejs");
 
-let mode = "sequential";
-let songs = [
-  { name: "simple_blink", isActive: true },
-  { name: "chain_blink", isActive: false }
-];
-
 app.get("/", (req, res) => {
-  res.render("index", { mode, songs });
+  res.render("index", {
+    mode: engine.mode,
+    songs: engine.songs.map(name => ({
+      name,
+      isActive: engine.currentSongName === name
+    }))
+  });
 });
 
 app.post("/dispatch/:action/:arg", (req, res) => {
@@ -19,12 +22,10 @@ app.post("/dispatch/:action/:arg", (req, res) => {
   console.log("dispatch:", action, "arg:", arg);
 
   if (action === "mode") {
-    mode = arg;
+    engine.setMode(arg);
   }
   if (action === "play") {
-    songs.forEach(song => {
-      song.isActive = song.name === arg;
-    });
+    engine.play(arg);
   }
   res.redirect("/");
 });
