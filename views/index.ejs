@@ -1,0 +1,75 @@
+<html>
+  <head>
+    <title>Xmas Lights</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+      integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+      crossorigin="anonymous"
+    />
+    <style>
+      .controls {
+        display: flex;
+        flex-direction: row;
+      }
+      .control {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: center;
+        color: grey;
+        padding: 10px;
+        margin: 2px;
+        border-radius: 4px;
+        background-color: #eee;
+        border: solid 1px transparent;
+      }
+      .control:active {
+        border-color: purple;
+      }
+      .control.active {
+        background-color: purple;
+        color: white;
+      }
+    </style>
+    <script>
+      function dispatch(action) {
+        console.log(action);
+        const form = document.createElement("form");
+        document.body.appendChild(form);
+        form.action = "/dispatch/" + action;
+        form.method = "post";
+        form.submit();
+      }
+    </script>
+  </head>
+  <body>
+    <div class="controls">
+      <div
+        onclick="dispatch('sequential')"
+        class="control <%= mode === 'sequential' ? 'active' : ''%>"
+      >
+        <i class="fas fa-angle-double-right"></i>
+      </div>
+      <div
+        onclick="dispatch('random')"
+        class="control <%= mode === 'random' ? 'active' : ''%>"
+      >
+        <i class="fas fa-random"></i>
+      </div>
+      <div
+        onclick="dispatch('repeat')"
+        class="control <%= mode === 'repeat' ? 'active' : ''%>"
+      >
+        <i class="fas fa-redo-alt"></i>
+      </div>
+      <div
+        onclick="dispatch('pause')"
+        class="control <%= mode === 'pause' ? 'active' : ''%>"
+      >
+        <i class="fas fa-pause"></i>
+      </div>
+    </div>
+  </body>
+</html>
