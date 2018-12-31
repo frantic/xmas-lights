@@ -6,6 +6,9 @@ const Engine = require("./src/engine");
 const songsDir = path.join(__dirname, "songs");
 const engine = new Engine(songsDir);
 
+// To avoid messing with PWD from /etc/rc.local
+process.chdir(__dirname);
+
 app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
