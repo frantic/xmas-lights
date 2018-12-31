@@ -1,8 +1,10 @@
+const path = require("path");
 const express = require("express");
 const app = express();
 const Engine = require("./src/engine");
 
-const engine = new Engine();
+const songsDir = path.join(__dirname, "songs");
+const engine = new Engine(songsDir);
 
 app.set("view engine", "ejs");
 

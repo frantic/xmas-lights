@@ -3,22 +3,21 @@ const path = require("path");
 const song = require("./song");
 const Player = require("./player");
 
-const songsDir = path.join(__dirname, "..", "songs");
-
 class Engine {
-  constructor() {
+  constructor(songsDir) {
+    this.songsDir = songsDir;
     this.mode = "sequential";
     this.currentSongName = null;
     this.player = new Player();
-    this.songs = fs.readdirSync(songsDir);
-    fs.watch(songsDir, (eventType, fileName) => {
+    this.songs = fs.readdirSync(this.songsDir);
+    fs.watch(this.songsDir, (eventType, fileName) => {
       console.log("fs event:", eventType, fileName);
       if (eventType === "change") {
         if (fileName === this.currentSongName && this.mode != "pause") {
           this.play(fileName);
         }
       } else {
-        this.songs = fs.readdirSync(songsDir);
+        this.songs = fs.readdirSync(this.songsDir);
       }
     });
     this.next();
@@ -41,7 +40,7 @@ class Engine {
       this.mode = "sequential";
     }
     this.currentSongName = name;
-    const source = fs.readFileSync(path.join(songsDir, name), "utf8");
+    const source = fs.readFileSync(path.join(this.songsDir, name), "utf8");
     const code = song.compile(source);
     this.player.play(code);
   }
