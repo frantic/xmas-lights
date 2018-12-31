@@ -1,3 +1,5 @@
+const controller = require("./controller");
+
 class Player {
   play(song) {
     this.stop();
@@ -27,9 +29,11 @@ async function run(song, signal) {
         break;
       case "on":
         console.log("Turning ON " + instr.arg);
+        controller[instr.arg].writeSync(1);
         break;
       case "off":
         console.log("Turning OFF " + instr.arg);
+        controller[instr.arg].writeSync(0);
         break;
     }
     pc++;

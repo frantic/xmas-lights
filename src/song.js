@@ -3,7 +3,8 @@ function compile(source) {
     .split(/\s/)
     .filter(Boolean)
     .map(s => s.toLowerCase())
-    .map(toBytecode);
+    .map(toBytecode)
+    .filter(Boolean);
 }
 
 function toBytecode(s) {
@@ -16,6 +17,9 @@ function toBytecode(s) {
   const delay = Number(s);
   if (!isNaN(delay)) {
     return { op: "delay", arg: delay };
+  }
+  if (s.length !== 2) {
+    return null;
   }
   const op = s[1] === "1" ? "on" : s[1] === "0" ? "off" : null;
   const color = colorMap[s[0]];
