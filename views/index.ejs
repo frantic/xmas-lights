@@ -9,6 +9,11 @@
       crossorigin="anonymous"
     />
     <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          "Segoe UI Symbol";
+      }
       .controls {
         display: flex;
         flex-direction: row;
@@ -32,13 +37,31 @@
         background-color: purple;
         color: white;
       }
+      .playlist {
+        display: flex;
+        flex-direction: column;
+        padding-top: 30px;
+      }
+      .song {
+        padding: 10px;
+        margin: 2px;
+        border-radius: 4px;
+        border: solid 1px transparent;
+      }
+      .song:active {
+        border-color: purple;
+      }
+      .song.active {
+        font-weight: bolder;
+        color: purple;
+      }
     </style>
     <script>
-      function dispatch(action) {
+      function dispatch(action, param) {
         console.log(action);
         const form = document.createElement("form");
         document.body.appendChild(form);
-        form.action = "/dispatch/" + action;
+        form.action = "/dispatch/" + action + "/" + param;
         form.method = "post";
         form.submit();
       }
@@ -47,29 +70,39 @@
   <body>
     <div class="controls">
       <div
-        onclick="dispatch('sequential')"
+        onclick="dispatch('mode', 'sequential')"
         class="control <%= mode === 'sequential' ? 'active' : ''%>"
       >
         <i class="fas fa-angle-double-right"></i>
       </div>
       <div
-        onclick="dispatch('random')"
+        onclick="dispatch('mode', 'random')"
         class="control <%= mode === 'random' ? 'active' : ''%>"
       >
         <i class="fas fa-random"></i>
       </div>
       <div
-        onclick="dispatch('repeat')"
+        onclick="dispatch('mode', 'repeat')"
         class="control <%= mode === 'repeat' ? 'active' : ''%>"
       >
         <i class="fas fa-redo-alt"></i>
       </div>
       <div
-        onclick="dispatch('pause')"
+        onclick="dispatch('mode', 'pause')"
         class="control <%= mode === 'pause' ? 'active' : ''%>"
       >
         <i class="fas fa-pause"></i>
       </div>
+    </div>
+    <div class="playlist">
+      <% for (const song of songs) { %>
+      <div
+        onclick="dispatch('play', '<%= song.name %>')"
+        class="song <%= song.isActive ? 'active' : '' %>"
+      >
+        <%= song.name %>
+      </div>
+      <% } %>
     </div>
   </body>
 </html>
