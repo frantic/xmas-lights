@@ -15,6 +15,9 @@ class Player {
 }
 
 async function run(song, signal) {
+  Object.keys(controller).forEach(color => {
+    controller[color].writeSync(0);
+  });
   let pc = 0;
   while (!signal.interrupted) {
     // loop
