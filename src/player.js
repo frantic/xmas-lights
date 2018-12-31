@@ -24,15 +24,12 @@ async function run(song, signal) {
     const instr = song[pc];
     switch (instr.op) {
       case "delay":
-        console.log("Delay " + instr.arg);
         await delay(instr.arg);
         break;
       case "on":
-        console.log("Turning ON " + instr.arg);
         controller[instr.arg].writeSync(1);
         break;
       case "off":
-        console.log("Turning OFF " + instr.arg);
         controller[instr.arg].writeSync(0);
         break;
     }
