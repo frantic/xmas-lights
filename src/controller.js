@@ -3,10 +3,10 @@ let controller = {};
 try {
   const Gpio = require("onoff").Gpio;
   controller = {
-    red: new Gpio(12, "out"),
-    green: new Gpio(16, "out"),
+    red: new Gpio(16, "out"),
+    green: new Gpio(21, "out"),
     blue: new Gpio(20, "out"),
-    yellow: new Gpio(21, "out")
+    yellow: new Gpio(12, "out")
   };
 } catch (e) {
   console.log("Failed to initialize GPIO, falling back to mock");
